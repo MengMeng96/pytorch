@@ -1,16 +1,16 @@
 #include <torch/csrc/jit/backends/backend.h>
 
 namespace torch {
-namespace jit {
+namespace custom_backend {
 // This test JIT backend is intended to do the minimal amount of work
 // necessary to test that the JIT backend registration endpoints and
 // code generation are working correctly. It is not intended to
 // produce numerically correct results.
-class TestBackend : public PyTorchBackendInterface {
+class CustomBackend : public torch::jit::PyTorchBackendInterface {
  public:
   // Constructor.
-  explicit TestBackend() {}
-  virtual ~TestBackend() = default;
+  explicit CustomBackend() {}
+  virtual ~CustomBackend() = default;
 
   c10::IValue preprocess(
       c10::IValue mod,
@@ -67,9 +67,6 @@ class TestBackend : public PyTorchBackendInterface {
   }
 };
 
-namespace {
-static auto cls = torch::jit::backend<TestBackend>("test_backend");
-}
-
-} // namespace jit
+std::string getBackendName();
+} // namespace custom_backend
 } // namespace torch
